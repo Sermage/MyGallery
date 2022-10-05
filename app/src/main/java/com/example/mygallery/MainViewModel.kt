@@ -1,42 +1,40 @@
 package com.example.mygallery
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mygallery.domain.images.Image
 import com.example.mygallery.network.NetworkInteractor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import java.lang.Exception
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var networkInteractor: NetworkInteractor
 
     private var getImagesJob: Job? = null
-    private val images = MutableLiveData<List<Image>>()
+    private val imagesMutableState = MutableStateFlow<List<Image>>(emptyList())
+    val imagesState = imagesMutableState.asStateFlow()
 
     init {
         getData()
     }
 
-    fun getImages(): LiveData<List<Image>> = images
-
     private fun getData() {
         if (getImagesJob != null) return
 
-        getImagesJob = viewModelScope.async {
+        getImagesJob = viewModelScope.launch {
             //start loading
             try {
-                networkInteractor.getImages()
-                images.value = awaitAll()
+
+                val images = networkInteractor.getImages()
+                imagesMutableState.emit(images)
             } catch (e: Exception) {
                 onError(e)
             }

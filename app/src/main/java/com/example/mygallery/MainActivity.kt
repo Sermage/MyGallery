@@ -31,9 +31,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        mainViewModel.getImages().observe(this) {
-            Log.d("IMAGES", it.toString())
-        }
+
+        Log.d("IMAGES", mainViewModel.imagesState.value.toString())
+
     }
 }
 
