@@ -5,6 +5,8 @@ import com.example.mygallery.utils.Constants.EMPTY_STRING
 data class Image(
     val id: String,
     val likesNumber: Int,
+    val width: Int,
+    val height: Int,
     val imageUrl: ImageUrl
 )
 
