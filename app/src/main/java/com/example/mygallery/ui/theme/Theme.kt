@@ -5,11 +5,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = Green,
     primaryVariant = Purple700,
     secondary = Green,
     background = Haiti,
@@ -18,7 +17,7 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = Green,
     primaryVariant = Purple700,
     secondary = Green,
     background = White,
@@ -42,5 +41,5 @@ fun MyGalleryTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     )
 
     val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(Color.White, darkIcons = !darkTheme)
+    systemUiController.setSystemBarsColor(colors.background, darkIcons = !darkTheme)
 }
