@@ -8,19 +8,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mygallery.R
 import com.example.mygallery.ui.theme.MyGalleryTheme
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(modifier: Modifier) {
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(key1 = true) {
+        delay(2000L)
+        navController.navigate("main_screen")
+    }
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colors.background)
     ) {
@@ -35,7 +43,7 @@ fun SplashScreen(modifier: Modifier) {
         Image(
             painter = painterResource(id = R.drawable.ic_logo_android),
             contentDescription = "android logo",
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 24.dp)
         )
@@ -46,7 +54,7 @@ fun SplashScreen(modifier: Modifier) {
 @Composable
 fun SplashScreenPreview() {
     MyGalleryTheme {
-        SplashScreen(modifier = Modifier)
+        SplashScreen(rememberNavController())
     }
 }
 
@@ -58,6 +66,6 @@ fun SplashScreenPreview() {
 @Composable
 fun SplashScreenDarkPreview() {
     MyGalleryTheme(darkTheme = true) {
-        SplashScreen(modifier = Modifier)
+        SplashScreen(rememberNavController())
     }
 }
