@@ -1,4 +1,4 @@
-package com.example.mygallery.ui.screens
+package com.example.mygallery.ui.screens.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.mygallery.MainViewModel
 import com.example.mygallery.R
 import com.example.mygallery.ui.elements.ImagesListGrid
 import com.example.mygallery.ui.elements.SearchField

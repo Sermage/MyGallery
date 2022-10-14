@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mygallery.ui.screens.MainScreen
-import com.example.mygallery.ui.screens.SplashScreen
+import com.example.mygallery.ui.screens.main.MainScreen
+import com.example.mygallery.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavigationHost(

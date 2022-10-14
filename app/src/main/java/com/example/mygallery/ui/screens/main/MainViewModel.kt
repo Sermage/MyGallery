@@ -1,4 +1,4 @@
-package com.example.mygallery
+package com.example.mygallery.ui.screens.main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val networkInteractor: NetworkInteractor
+    private val networkInteractor: NetworkInteractor
 ) : ViewModel() {
 
     private val imagesMutableState = MutableStateFlow<List<Image>>(emptyList())

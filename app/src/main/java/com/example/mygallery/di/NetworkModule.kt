@@ -35,8 +35,8 @@ class NetworkModule {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("Authorization", Constants.ACCESS_KEY)
-                    .addHeader("Accept-Version", "v1")
+                    .addHeader(Constants.AUTHORIZATION_HEADER, Constants.ACCESS_KEY)
+                    .addHeader(Constants.API_VERSION_HEADER, Constants.API_VERSION)
                     .build()
                 chain.proceed(request)
             }
