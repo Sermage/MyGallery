@@ -3,11 +3,11 @@ package com.example.mygallery.domain.images
 import com.example.mygallery.utils.Constants.EMPTY_STRING
 
 data class Image(
-    val id: String,
-    val likesNumber: Int,
-    val width: Int,
-    val height: Int,
-    val imageUrl: ImageUrl
+    val id: String = EMPTY_STRING,
+    val likesNumber: Int = 0,
+    val width: Int = 0,
+    val height: Int = 0,
+    val imageUrl: ImageUrl = ImageUrl()
 )
 
 data class ImageUrl(

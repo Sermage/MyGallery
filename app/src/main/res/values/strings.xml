@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MyGallery</string>
+
     <string name="search_hint">Search</string>
+    <string name="loading_error_text">Something went wrong. Try to refresh</string>
+    <string name="refresh_button_title">Refresh</string>
 </resources>

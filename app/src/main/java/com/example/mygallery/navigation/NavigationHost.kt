@@ -9,21 +9,24 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mygallery.ui.screens.main.MainScreen
 import com.example.mygallery.ui.screens.splash.SplashScreen
 
+const val SPLASH_SCREEN_ROUTE = "splash_screen"
+const val MAIN_SCREEN_ROUTE = "main_screen"
+
 @Composable
 fun NavigationHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "splash_screen"
+    startDestination: String = SPLASH_SCREEN_ROUTE
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        composable("splash_screen") {
+        composable(SPLASH_SCREEN_ROUTE) {
             SplashScreen(navController = navController)
         }
-        composable("main_screen") {
+        composable(MAIN_SCREEN_ROUTE) {
             MainScreen()
         }
     }

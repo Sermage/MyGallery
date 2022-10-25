@@ -17,14 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mygallery.R
+import com.example.mygallery.navigation.MAIN_SCREEN_ROUTE
 import com.example.mygallery.ui.theme.MyGalleryTheme
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = Unit) {
         delay(2000L)
-        navController.navigate("main_screen")
+        navController.navigate(MAIN_SCREEN_ROUTE)
     }
     Box(
         contentAlignment = Alignment.Center,
