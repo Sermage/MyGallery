@@ -36,6 +36,7 @@ class MainViewModel @Inject constructor(
     private fun reduce(currentState: MainScreenState.Error, event: MainScreenEvent) {
         when (event) {
             is MainScreenEvent.Reload -> getData()
+
         }
     }
 
@@ -43,6 +44,7 @@ class MainViewModel @Inject constructor(
         flow {
             emit(networkInteractor.getImages())
         }
+            .onStart { loading() }
             .onEach { updateContent(it) }
             .catch { handleError(it) }
             .launchIn(viewModelScope)
@@ -54,5 +56,9 @@ class MainViewModel @Inject constructor(
 
     private suspend fun updateContent(content: List<Image>) {
         imagesMutableState.emit(MainScreenState.Content(images = content))
+    }
+
+    private suspend fun loading() {
+        imagesMutableState.emit(MainScreenState.Loading)
     }
 }

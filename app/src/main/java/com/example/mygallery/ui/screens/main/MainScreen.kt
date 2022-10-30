@@ -11,7 +11,8 @@ fun MainScreen() {
     val vm = hiltViewModel<MainViewModel>()
     val state = vm.imagesState.collectAsState().value
     when (state) {
-        is MainScreenState.Content -> MainScreenContent(content = state.images)
+        is MainScreenState.Loading -> MainScreenContent(content = emptyList(), isLoading = true)
+        is MainScreenState.Content -> MainScreenContent(content = state.images, isLoading = false)
         is MainScreenState.Error -> MainScreenError { vm.obtainEvent(MainScreenEvent.Reload) }
     }
 }

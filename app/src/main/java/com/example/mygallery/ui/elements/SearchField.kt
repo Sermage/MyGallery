@@ -14,10 +14,14 @@ import com.example.mygallery.R
 import com.example.mygallery.ui.theme.MyGalleryTheme
 
 @Composable
-fun SearchField(modifier: Modifier = Modifier) {
+fun SearchField(
+    modifier: Modifier = Modifier,
+    isEnabled: Boolean = true
+) {
     TextField(
         value = "",
         onValueChange = {},
+        enabled = isEnabled,
         modifier = modifier
             .fillMaxWidth()
             .heightIn(40.dp),
