@@ -13,17 +13,21 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mygallery.R
 import com.example.mygallery.domain.images.Image
+import com.example.mygallery.navigation.SEARCH_SCREEN_ROUTE
 import com.example.mygallery.ui.elements.CircularIndeterminateProgressBar
 import com.example.mygallery.ui.elements.ImagesListGrid
-import com.example.mygallery.ui.elements.SearchField
+import com.example.mygallery.ui.elements.SearchButton
 import com.example.mygallery.ui.theme.MyGalleryTheme
 
 @Composable
 fun MainScreenContent(
     content: List<Image>,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    navController: NavController
 ) {
     Column(
         Modifier
@@ -39,10 +43,9 @@ fun MainScreenContent(
                 .height(40.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
         )
-        SearchField(
-            Modifier.padding(horizontal = 24.dp),
-            isEnabled = !isLoading
-        )
+        SearchButton {
+            navController.navigate(SEARCH_SCREEN_ROUTE)
+        }
         Spacer(modifier = Modifier.height(32.dp))
 
         val loading by remember {
@@ -69,7 +72,8 @@ fun MainScreenContentPreview() {
     MyGalleryTheme {
         MainScreenContent(
             content = emptyList(),
-            isLoading = true
+            isLoading = true,
+            navController = rememberNavController()
         )
     }
 }

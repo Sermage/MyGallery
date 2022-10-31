@@ -10,4 +10,7 @@ class NetworkInteractor @Inject constructor(
 ) {
 
     suspend fun getImages(): List<Image> = networkRepository.getImages()
+
+    suspend fun getSearchableImages(query: String, page: Int = 1): List<Image> =
+        networkRepository.getSearchableImages(query, page)
 }

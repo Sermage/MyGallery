@@ -10,4 +10,7 @@ class NetworkRepository @Inject constructor(
 
     suspend fun getImages(): List<Image> = apiService.getPhotos()
         .map { it.toImage() }
+
+    suspend fun getSearchableImages(query: String, page: Int): List<Image> =
+        apiService.getSearchablePhotos(query, page).results?.map { it.toImage() } ?: emptyList()
 }

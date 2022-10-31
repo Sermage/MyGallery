@@ -17,7 +17,6 @@ fun CircularIndeterminateProgressBar(
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         CircularProgressIndicator(
-            progress = 0.8f,
             color = MaterialTheme.colors.primary,
             strokeWidth = 4.dp,
         )

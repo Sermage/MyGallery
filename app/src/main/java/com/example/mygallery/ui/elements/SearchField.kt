@@ -12,16 +12,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mygallery.R
 import com.example.mygallery.ui.theme.MyGalleryTheme
+import com.example.mygallery.utils.Constants.EMPTY_STRING
 
 @Composable
 fun SearchField(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean = true
+    isEnabled: Boolean = true,
+    readOnly: Boolean = false,
+    value: String = EMPTY_STRING,
+    onValueChange: (String) -> Unit = {},
 ) {
     TextField(
-        value = "",
-        onValueChange = {},
+        value = value,
+        onValueChange = onValueChange,
         enabled = isEnabled,
+        readOnly = readOnly,
         modifier = modifier
             .fillMaxWidth()
             .heightIn(40.dp),

@@ -20,15 +20,15 @@ class MainViewModel @Inject constructor(
     private val networkInteractor: NetworkInteractor
 ) : ViewModel(), EventHandler<MainScreenEvent> {
 
-    private val imagesMutableState = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
-    val imagesState = imagesMutableState.asStateFlow()
+    private val mainScreenMutableState = MutableStateFlow<MainScreenState>(MainScreenState.Loading)
+    val mainScreenState = mainScreenMutableState.asStateFlow()
 
     init {
         getData()
     }
 
     override fun obtainEvent(event: MainScreenEvent) {
-        when (val currentState = imagesState.value) {
+        when (val currentState = mainScreenState.value) {
             is MainScreenState.Error -> reduce(currentState, event)
         }
     }
@@ -45,20 +45,20 @@ class MainViewModel @Inject constructor(
             emit(networkInteractor.getImages())
         }
             .onStart { loading() }
-            .onEach { updateContent(it) }
+            .onEach { getContent(it) }
             .catch { handleError(it) }
             .launchIn(viewModelScope)
     }
 
     private suspend fun handleError(error: Throwable) {
-        imagesMutableState.emit(MainScreenState.Error(error.message ?: "Something went wrong"))
+        mainScreenMutableState.emit(MainScreenState.Error(error.message ?: "Something went wrong"))
     }
 
-    private suspend fun updateContent(content: List<Image>) {
-        imagesMutableState.emit(MainScreenState.Content(images = content))
+    private suspend fun getContent(content: List<Image>) {
+        mainScreenMutableState.emit(MainScreenState.Content(images = content))
     }
 
     private suspend fun loading() {
-        imagesMutableState.emit(MainScreenState.Loading)
+        mainScreenMutableState.emit(MainScreenState.Loading)
     }
 }
