@@ -18,7 +18,8 @@ const val SEARCH_SCREEN_ROUTE = "search_screen"
 fun NavigationHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = SPLASH_SCREEN_ROUTE
+    startDestination: String = SPLASH_SCREEN_ROUTE,
+    googleAssistantQuery: String? = null
 ) {
     NavHost(
         modifier = modifier,
@@ -26,13 +27,13 @@ fun NavigationHost(
         startDestination = startDestination
     ) {
         composable(SPLASH_SCREEN_ROUTE) {
-            SplashScreen(navController)
+            SplashScreen(navController, googleAssistantQuery)
         }
         composable(MAIN_SCREEN_ROUTE) {
             MainScreen(navController)
         }
         composable(SEARCH_SCREEN_ROUTE) {
-            SearchScreen()
+            SearchScreen(googleAssistantQuery)
         }
     }
 }

@@ -10,6 +10,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,12 +21,15 @@ import com.sermage.mygallery.ui.elements.CircularIndeterminateProgressBar
 import com.sermage.mygallery.ui.elements.ImagesListGrid
 import com.sermage.mygallery.ui.elements.SearchField
 import com.sermage.mygallery.ui.theme.MyGalleryTheme
+import com.sermage.mygallery.utils.Constants
 import com.sermage.mygallery.utils.debounce
 
 private const val SEARCH_DEBOUNCE_TIME_MILLIS = 500L
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    googleAssistantQuery: String? = null
+) {
     val vm = hiltViewModel<SearchViewModel>()
     val state = vm.searchScreenState.collectAsState().value
     Column(
@@ -41,7 +46,7 @@ fun SearchScreen() {
                 .height(40.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
         )
-        SearchFieldImpl(vm)
+        SearchFieldImpl(vm, googleAssistantQuery)
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -61,9 +66,18 @@ fun SearchScreen() {
 
 @Composable
 private fun SearchFieldImpl(
-    vm: SearchViewModel
+    vm: SearchViewModel,
+    googleAssistantQuery: String?
 ) {
-    var query by remember { mutableStateOf("") }
+    val initialQuery = googleAssistantQuery ?: Constants.EMPTY_STRING
+    var query by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = initialQuery,
+                selection = TextRange(initialQuery.length)
+            )
+        )
+    }
     val focusRequester = remember { FocusRequester() }
 
     SearchField(
@@ -75,12 +89,17 @@ private fun SearchFieldImpl(
         query = text
         debounce(SEARCH_DEBOUNCE_TIME_MILLIS, vm.viewModelScope) {
             vm.obtainEvent(
-                SearchScreenEvent.SearchValueChanged(query)
+                SearchScreenEvent.SearchValueChanged(query.text)
             )
         }
     }
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
+        if (initialQuery.isNotEmpty()) {
+            vm.obtainEvent(
+                SearchScreenEvent.SearchValueChanged(initialQuery)
+            )
+        }
     }
 }
 

@@ -8,19 +8,19 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sermage.mygallery.R
 import com.sermage.mygallery.ui.theme.MyGalleryTheme
-import com.sermage.mygallery.utils.Constants.EMPTY_STRING
 
 @Composable
 fun SearchField(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
     readOnly: Boolean = false,
-    value: String = EMPTY_STRING,
-    onValueChange: (String) -> Unit = {},
+    value: TextFieldValue = TextFieldValue(),
+    onValueChange: (TextFieldValue) -> Unit = {},
 ) {
     TextField(
         value = value,
@@ -38,7 +38,8 @@ fun SearchField(
             )
         },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.surface
+            backgroundColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.onSurface
         ),
         placeholder = {
             Text(

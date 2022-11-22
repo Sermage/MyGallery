@@ -18,14 +18,20 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sermage.mygallery.R
 import com.sermage.mygallery.navigation.MAIN_SCREEN_ROUTE
+import com.sermage.mygallery.navigation.SEARCH_SCREEN_ROUTE
 import com.sermage.mygallery.ui.theme.MyGalleryTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    navController: NavController,
+    googleAssistantQuery: String? = null
+) {
     LaunchedEffect(key1 = Unit) {
         delay(2000L)
-        navController.navigate(MAIN_SCREEN_ROUTE)
+        val route = if (googleAssistantQuery != null) SEARCH_SCREEN_ROUTE
+        else MAIN_SCREEN_ROUTE
+        navController.navigate(route)
     }
     Box(
         contentAlignment = Alignment.Center,
