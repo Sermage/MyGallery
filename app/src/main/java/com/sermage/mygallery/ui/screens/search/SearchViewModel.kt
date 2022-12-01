@@ -1,7 +1,12 @@
 package com.sermage.mygallery.ui.screens.search
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.Intent
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.sermage.mygallery.MainActivity
 import com.sermage.mygallery.base.EventHandler
 import com.sermage.mygallery.domain.images.Image
 import com.sermage.mygallery.network.NetworkInteractor
@@ -18,8 +23,9 @@ sealed class SearchScreenState {
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val networkInteractor: NetworkInteractor
-) : ViewModel(), EventHandler<SearchScreenEvent> {
+    private val networkInteractor: NetworkInteractor,
+    application: Application
+) : AndroidViewModel(application), EventHandler<SearchScreenEvent> {
 
     private val searchScreenMutableState =
         MutableStateFlow<SearchScreenState>(SearchScreenState.EmptyResult)
@@ -42,7 +48,10 @@ class SearchViewModel @Inject constructor(
             emit(networkInteractor.getSearchableImages(query))
         }
             .onStart { loading() }
-            .onEach { getSearchableItems(it) }
+            .onEach {
+                getSearchableItems(it)
+                pushDynamicShortcuts(query)
+            }
             .catch { handleError(it) }
             .launchIn(viewModelScope)
 
@@ -58,6 +67,19 @@ class SearchViewModel @Inject constructor(
             error.message ?: "Something went wrong"
         )
     )
+
+    private fun pushDynamicShortcuts(query: String) {
+        val intent = Intent(getApplication(), MainActivity::class.java)
+        intent.action = Intent.ACTION_VIEW
+        val shortcutInfo = ShortcutInfoCompat.Builder(getApplication(), "shortcut")
+            .setShortLabel(query)
+            .setLongLabel("find $query")
+            .addCapabilityBinding("actions.intent.GET_THING", "thing.name", listOf(query))
+            .setIntent(intent)
+            .build()
+
+        ShortcutManagerCompat.pushDynamicShortcut(getApplication(), shortcutInfo)
+    }
 
     private companion object {
         private const val MIN_SEARCH_QUERY_LENGTH = 3

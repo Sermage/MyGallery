@@ -88,6 +88,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
+    //Dynamic shortcuts
+    implementation "androidx.core:core-google-shortcuts:1.0.1"
+
 }
 
 kapt {
