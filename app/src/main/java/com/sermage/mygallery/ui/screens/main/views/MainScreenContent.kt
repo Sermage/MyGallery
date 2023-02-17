@@ -13,11 +13,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sermage.mygallery.R
 import com.sermage.mygallery.domain.images.Image
-import com.sermage.mygallery.navigation.SEARCH_SCREEN_ROUTE
 import com.sermage.mygallery.ui.elements.CircularIndeterminateProgressBar
 import com.sermage.mygallery.ui.elements.ImagesListGrid
 import com.sermage.mygallery.ui.elements.SearchButton
@@ -27,7 +24,7 @@ import com.sermage.mygallery.ui.theme.MyGalleryTheme
 fun MainScreenContent(
     content: List<Image>,
     isLoading: Boolean = false,
-    navController: NavController
+    onSearchButtonClick: () -> Unit
 ) {
     Column(
         Modifier
@@ -44,7 +41,7 @@ fun MainScreenContent(
             colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
         )
         SearchButton {
-            navController.navigate(SEARCH_SCREEN_ROUTE)
+            onSearchButtonClick()
         }
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -73,7 +70,7 @@ fun MainScreenContentPreview() {
         MainScreenContent(
             content = emptyList(),
             isLoading = true,
-            navController = rememberNavController()
+            onSearchButtonClick = {}
         )
     }
 }

@@ -14,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sermage.mygallery.R
 import com.sermage.mygallery.navigation.MAIN_SCREEN_ROUTE
 import com.sermage.mygallery.navigation.SEARCH_SCREEN_ROUTE
@@ -24,14 +22,14 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
-    googleAssistantQuery: String? = null
+    googleAssistantQuery: String? = null,
+    navigateToMainScreen: () -> Unit,
 ) {
     LaunchedEffect(key1 = Unit) {
         delay(2000L)
         val route = if (googleAssistantQuery != null) SEARCH_SCREEN_ROUTE
         else MAIN_SCREEN_ROUTE
-        navController.navigate(route)
+        navigateToMainScreen()
     }
     Box(
         contentAlignment = Alignment.Center,
@@ -61,7 +59,7 @@ fun SplashScreen(
 @Composable
 fun SplashScreenPreview() {
     MyGalleryTheme {
-        SplashScreen(rememberNavController())
+        SplashScreen {}
     }
 }
 
@@ -73,6 +71,6 @@ fun SplashScreenPreview() {
 @Composable
 fun SplashScreenDarkPreview() {
     MyGalleryTheme(darkTheme = true) {
-        SplashScreen(rememberNavController())
+        SplashScreen {}
     }
 }

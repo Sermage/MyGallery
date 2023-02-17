@@ -27,10 +27,21 @@ fun NavigationHost(
         startDestination = startDestination
     ) {
         composable(SPLASH_SCREEN_ROUTE) {
-            SplashScreen(navController, googleAssistantQuery)
+            SplashScreen(
+                googleAssistantQuery = googleAssistantQuery,
+                navigateToMainScreen = {
+                    navController.navigate(MAIN_SCREEN_ROUTE) {
+                        launchSingleTop = true
+                        popUpTo(SPLASH_SCREEN_ROUTE) { inclusive = true }
+                    }
+                },
+            )
         }
         composable(MAIN_SCREEN_ROUTE) {
-            MainScreen(navController)
+            MainScreen(
+                backClick = { navController.popBackStack() },
+                onSearchButtonClick = { navController.navigate(SEARCH_SCREEN_ROUTE) }
+            )
         }
         composable(SEARCH_SCREEN_ROUTE) {
             SearchScreen(googleAssistantQuery)
